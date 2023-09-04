@@ -203,7 +203,7 @@ async function connectToWhatsApp() {
                       quoted: messages[0],
                     }
                   );
-                }, 5400);
+                }, 60400);
 
                 return;
               }
