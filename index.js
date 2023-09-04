@@ -144,10 +144,10 @@ async function connectToWhatsApp() {
 
           const {data} = await Student.pesquisarAluno(studentMaria.id());
 
-          console.log(data.data);
+          console.log(data.data, data);
           // logger.info("student: " + JSON.stringify());
 
-          if (student.data == "aluno_not_found" || student.found == false) {
+          if (data.data == "aluno_not_found" || data.found == false) {
             setTimeout(async () => {
               await sock.sendMessage(
                 numberWa,
