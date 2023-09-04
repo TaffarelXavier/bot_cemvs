@@ -193,6 +193,18 @@ async function connectToWhatsApp() {
                   );
                 }, 2400);
 
+                setTimeout(async () => {
+                  await sock.sendMessage(
+                    numberWa,
+                    {
+                      text: "Deu certo?",
+                    },
+                    {
+                      quoted: messages[0],
+                    }
+                  );
+                }, 5400);
+
                 return;
               }
               if (result.data == "bad_request") {
