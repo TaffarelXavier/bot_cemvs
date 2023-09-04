@@ -144,7 +144,7 @@ async function connectToWhatsApp() {
 
           const {data} = await Student.pesquisarAluno(studentMaria.id());
 
-          console.log(data.data, data);
+
 
           if (data.data == "aluno_not_found" || data.found == false) {
             setTimeout(async () => {
@@ -160,6 +160,8 @@ async function connectToWhatsApp() {
             }, 1300);
             return;
           } else {
+            console.log("entrou");
+            console.log(data.data);
             if (data.found) {
               const result = await Student.changePasswordStudent(data.data);
               if (result.status == 204) {
