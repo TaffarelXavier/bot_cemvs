@@ -33,6 +33,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const port = process.env.PORT || 8000;
 const qrcode = require("qrcode");
+const logger = require("./utils/logger");
 
 app.use("/assets", express.static(__dirname + "/client/assets"));
 
@@ -139,9 +140,11 @@ async function connectToWhatsApp() {
             });
           }, 1000);
 
-          const maria = Student;
+          const studentMaria = Student;
 
-          const student = await Student.pesquisarAluno(maria.id());
+          const student = await Student.pesquisarAluno(studentMaria.id());
+
+          logger.info("student: " + JSON.stringify(student));
 
           if (student.data == "aluno_not_found" || student.found == false) {
             setTimeout(async () => {
