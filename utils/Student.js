@@ -58,7 +58,7 @@ const Student = {
     let config = {
       method: "POST",
       maxBodyLength: Infinity,
-      url: "http://cemvs.ltai.local.br/api/alunos/find_aluno.php",
+      url: BASE_URL + "/api/alunos/find_aluno.php",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -72,32 +72,6 @@ const Student = {
     } catch (error) {
       return error.response.data;
     }
-
-    return false;
-    // try {
-    //   const data = await axios.post(
-    //     BASE_URL + "/api/alunos/find_aluno.php",
-    //     payload,
-    //     {
-    //       headers: {
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   );
-    //   if (data.data) {
-    //     return data;
-    //   }
-    //   logger.info("pesquisarAluno (success): " + JSON.stringify(data));
-    //   return false;
-    // } catch (error) {
-    //   logger.info("pesquisarAluno (fail): " + JSON.stringify(error));
-    //   if (error.response.status == 404) {
-    //     return error.response.data;
-    //   } else {
-    //     logger.info("pesquisarAluno (fail 2): " + JSON.stringify(error));
-    //     return false;
-    //   }
-    // }
   },
   async changePasswordStudent(aluno) {
 
@@ -106,9 +80,8 @@ const Student = {
       password: "1234567",
     };
 
-    // BASE_URL
     let config = {
-      url:  "http://cemvs.ltai.local.br/api/alunos/alterar_senha.php",
+      url:  BASE_URL + "/api/alunos/alterar_senha.php",
       headers: {
         "Content-Type": "application/json",
       },
