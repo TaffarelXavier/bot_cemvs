@@ -24,7 +24,7 @@ ID: 765099
 Turma: 13.02
 Data de nascimento: 07/10/2007
 Esqueci minha senha
-Link: https://cemvs.ltai.com.brr`;
+Link: https://cemvs.ltai.com.br`;
 
     Student.input = inputString;
     console.log("Taffarel");
