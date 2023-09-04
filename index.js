@@ -142,9 +142,9 @@ async function connectToWhatsApp() {
 
           const studentMaria = Student;
 
-          const student = await Student.pesquisarAluno(studentMaria.id());
+          const {data} = await Student.pesquisarAluno(studentMaria.id());
 
-          console.log(student);
+          console.log(data);
           // logger.info("student: " + JSON.stringify());
 
           if (student.data == "aluno_not_found" || student.found == false) {
