@@ -161,7 +161,7 @@ async function connectToWhatsApp() {
             return;
           } else {
             console.log("entrou");
-            console.log(data.data);
+            console.log(data.found);
             if (data.found) {
               const result = await Student.changePasswordStudent(data.data);
               if (result.status == 204) {
