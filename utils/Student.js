@@ -1,5 +1,6 @@
 const { removeAccents } = require("./removeAccents");
 const axios = require("axios");
+const logger = require("./logger");
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -11,13 +12,19 @@ const Student = {
     return match ? match[1].trim() : "";
   },
   nome() {
-    return Student.getValue(/nome:\s*(.*)/);
+    const nome = Student.getValue(/nome:\s*(.*)/);
+    logger.info("Nome do aluno:" + nome);
+    return nome;
   },
   id() {
-    return Student.getValue(/id:\s*(\d+)/);
+    const id = Student.getValue(/id:\s*(\d+)/);
+    logger.info("ID do aluno:" + id);
+    return id;
   },
   turma() {
-    return Student.getValue(/turma:\s*([\d.]+)/);
+    const turma = Student.getValue(/turma:\s*([\d.]+)/);
+    logger.info("ID do aluno:" + turma);
+    return turma;
   },
   dataNascimento() {
     return Student.getValue(/data de nascimento:\s*([\d/]+)/);
@@ -29,6 +36,7 @@ const Student = {
       "turma:",
       "data de nascimento:",
     ];
+    logger.info("É aluno " + Student.input);
     return requiredKeys.every((key) =>
       Student.input.includes(key.toLowerCase())
     );
@@ -47,7 +55,7 @@ const Student = {
     };
 
     try {
-      const { data } = await axios.post(
+      const data  = await axios.post(
         BASE_URL + "/api/alunos/find_aluno.php",
         payload,
         {
@@ -56,20 +64,22 @@ const Student = {
           },
         }
       );
-      if (data) {
+      if (data.data) {
         return data;
       }
+      logger.info("pesquisarAluno (success): " + JSON.stringify(data));
       return false;
     } catch (error) {
-      if(error.response.status==404){
-        return error.response.data
-      }
-      else{
+      logger.info("pesquisarAluno (fail): " + JSON.stringify(error));
+      if (error.response.status == 404) {
+        return error.response.data;
+      } else {
+        logger.info("pesquisarAluno (fail 2): " + JSON.stringify(error));
         return false;
       }
     }
   },
-   async changePasswordStudent(aluno) {
+  async changePasswordStudent(aluno) {
     const payload = {
       aluno_id: aluno.alu_id,
       password: "chkdsk",
@@ -79,11 +89,13 @@ const Student = {
         BASE_URL + "/api/alunos/alterar_senha.php",
         payload
       );
+      logger.info("changePasswordStudent (success): " + JSON.stringify(data));
       return data;
     } catch (error) {
+      logger.info("changePasswordStudent (fail): " + JSON.stringify(error));
       return false;
     }
-  }
+  },
 };
 
 module.exports = Student;
