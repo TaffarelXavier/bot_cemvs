@@ -51,51 +51,76 @@ const Student = {
     };
   },
   async pesquisarAluno(alunoId) {
-    const payload = {
+    let data = {
       aluno_id: alunoId,
     };
 
-    try {
-      const data = await axios.post(
-        BASE_URL + "/api/alunos/find_aluno.php",
-        payload,
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-      if (data.data) {
-        return data;
-      }
-      logger.info("pesquisarAluno (success): " + JSON.stringify(data));
-      return false;
-    } catch (error) {
-      logger.info("pesquisarAluno (fail): " + JSON.stringify(error));
-      if (error.response.status == 404) {
-        return error.response.data;
-      } else {
-        logger.info("pesquisarAluno (fail 2): " + JSON.stringify(error));
-        return false;
-      }
-    }
-  },
-  async changePasswordStudent(aluno) {
-    const payload = {
-      aluno_id: aluno.alu_id,
-      password: "chkdsk",
+    let config = {
+      method: "POST",
+      maxBodyLength: Infinity,
+      url: "http://cemvs.ltai.local.br/api/alunos/find_aluno.php",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: data,
     };
+
     try {
-      const data = await axios.put(
-        BASE_URL + "/api/alunos/alterar_senha.php",
-        payload
-      );
-      logger.info("changePasswordStudent (success): " + JSON.stringify(data));
+      const { data } = await axios.request(config);
       return data;
     } catch (error) {
-      console.log(error);
-      logger.info("changePasswordStudent (fail): " + error);
-      return false;
+      return error.response.data;
+    }
+
+    return false;
+    // try {
+    //   const data = await axios.post(
+    //     BASE_URL + "/api/alunos/find_aluno.php",
+    //     payload,
+    //     {
+    //       headers: {
+    //         Accept: "application/json",
+    //       },
+    //     }
+    //   );
+    //   if (data.data) {
+    //     return data;
+    //   }
+    //   logger.info("pesquisarAluno (success): " + JSON.stringify(data));
+    //   return false;
+    // } catch (error) {
+    //   logger.info("pesquisarAluno (fail): " + JSON.stringify(error));
+    //   if (error.response.status == 404) {
+    //     return error.response.data;
+    //   } else {
+    //     logger.info("pesquisarAluno (fail 2): " + JSON.stringify(error));
+    //     return false;
+    //   }
+    // }
+  },
+  async changePasswordStudent(aluno) {
+
+    const payload = {
+      aluno_id: aluno.alu_id,
+      password: "1234567",
+    };
+
+    // BASE_URL
+    let config = {
+      url:  "http://cemvs.ltai.local.br/api/alunos/alterar_senha.php",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const response = await axios.put(config.url, payload, config.headers);
+      return response;
+    } catch ({ response }) {
+      console.log("Status:", response.status);
+      console.log("statusText:", response.statusText);
+      console.log("data:", response.data);
     }
   },
 };

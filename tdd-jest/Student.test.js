@@ -27,7 +27,6 @@ Esqueci minha senha
 Link: https://cemvs.ltai.com.br`;
 
     Student.input = inputString;
-    console.log("Taffarel");
 
     expect(Student.id()).toEqual('765099');
   });

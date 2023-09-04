@@ -121,7 +121,6 @@ async function connectToWhatsApp() {
         Student.input = captureMessage;
 
         if (eCemvs && isStudent(entradaAluno)) {
-
           let messageStart = null;
 
           setTimeout(async () => {
@@ -142,28 +141,33 @@ async function connectToWhatsApp() {
 
           const studentMaria = Student;
 
-          const {data} = await Student.pesquisarAluno(studentMaria.id());
+          const response = await Student.pesquisarAluno(studentMaria.id());
 
+          console.log(response.data == "aluno_not_found" || response.found == false);
 
+          if (response.data == "aluno_not_found" || response.found == false) {
 
-          if (data.data == "aluno_not_found" || data.found == false) {
             setTimeout(async () => {
               await sock.sendMessage(
                 numberWa,
                 {
-                  text: "😕 Ops! infelizmente, não encontrei sua conta no AVA.\nPor favor, entre em contato com a coordenação da escola.",
+                  text: "😕 Ops! infelizmente, não encontrei sua conta no AVA.\nPor favor, entre em contato com a coordenação da escola para verificar essa situação.",
                 },
                 {
                   quoted: messages[0],
                 }
               );
             }, 1300);
+
             return;
           } else {
-            console.log("entrou");
-            if (data.found) {
-              const result = await Student.changePasswordStudent(data.data);
-              console.log(result);
+
+            if (response.found) {
+
+              const result = await Student.changePasswordStudent(response.data);
+
+              console.log(result.status);
+
               if (result.status == 204) {
                 setTimeout(async () => {
                   await sock.sendMessage(
