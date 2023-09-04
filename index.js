@@ -185,7 +185,7 @@ async function connectToWhatsApp() {
                   await sock.sendMessage(
                     numberWa,
                     {
-                      text: "123456",
+                      text: "1234567",
                     },
                     {
                       quoted: messages[0],
