@@ -7,9 +7,10 @@ const BASE_URL = process.env.BASE_URL;
 const Student = {
   input: null,
   getValue(regexPattern) {
-    const value = removeAccents(Student.input.trim());
+    const value = removeAccents(Student.input.trim().replace(/\*/g, ""));
     const match = value.toLowerCase().match(regexPattern);
-    return match ? match[1].trim() : "";
+    const data = match ? match[1].trim() : "";
+    return data;
   },
   nome() {
     const nome = Student.getValue(/nome:\s*(.*)/);
@@ -23,7 +24,7 @@ const Student = {
   },
   turma() {
     const turma = Student.getValue(/turma:\s*([\d.]+)/);
-    logger.info("ID do aluno:" + turma);
+    logger.info("Turma do aluno:" + turma);
     return turma;
   },
   dataNascimento() {
@@ -55,7 +56,7 @@ const Student = {
     };
 
     try {
-      const data  = await axios.post(
+      const data = await axios.post(
         BASE_URL + "/api/alunos/find_aluno.php",
         payload,
         {
