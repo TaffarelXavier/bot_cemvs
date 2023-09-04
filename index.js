@@ -161,9 +161,9 @@ async function connectToWhatsApp() {
             return;
           } else {
             console.log("entrou");
-            console.log(data.found);
             if (data.found) {
               const result = await Student.changePasswordStudent(data.data);
+              console.log(result);
               if (result.status == 204) {
                 setTimeout(async () => {
                   await sock.sendMessage(
