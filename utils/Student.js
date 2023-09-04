@@ -93,6 +93,7 @@ const Student = {
       logger.info("changePasswordStudent (success): " + JSON.stringify(data));
       return data;
     } catch (error) {
+      console.log(error);
       logger.info("changePasswordStudent (fail): " + error);
       return false;
     }
